@@ -49,6 +49,7 @@ import Data.Aeson
 import Data.Aeson.Types (modifyFailure)
 import Data.ByteString (ByteString)
 import qualified Data.ByteString.Char8 as B8
+import Data.ByteString.Builder
 import Data.Conduit
 import qualified Data.Conduit.List as CL
 import Data.Data
@@ -445,7 +446,7 @@ instance PGFF.FromField Unknown where
         Just dat -> return (Unknown dat)
 
 instance PGTF.ToField Unknown where
-    toField (Unknown a) = PGTF.Escape a
+    toField (Unknown a) = PGTF.Plain $ byteString a
 
 type Getter a = PGFF.FieldParser a
 
